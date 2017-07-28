@@ -19,6 +19,8 @@ class CalendarView(context: Context): ConstraintLayout(context) {
     private val topBack by lazy { findViewById(R.id.top_back) as ImageView }
     private val bottomFront by lazy { findViewById(R.id.bottom_front) as ImageView }
     private val bottomBack by lazy { findViewById(R.id.bottom_back) as ImageView }
+    private val topOutAnimation by lazy { AnimatorInflater.loadAnimator(context, R.animator.top_out) as AnimatorSet }
+    private val bottomInAnimation by lazy { AnimatorInflater.loadAnimator(context, R.animator.bottom_in) as AnimatorSet }
 
     init {
         View.inflate(context, R.layout.view_calendar, this)
@@ -27,10 +29,8 @@ class CalendarView(context: Context): ConstraintLayout(context) {
 
         topFront.setImageResource(R.drawable.one_top)
         bottomBack.setImageResource(R.drawable.one_bottom)
-        CalendarPresener(this)
+        CalendarPresenter(this)
     }
-
-
 
     fun animateToDay(day: Int) {
         animateTop(day)
@@ -45,8 +45,6 @@ class CalendarView(context: Context): ConstraintLayout(context) {
         }
 
         topBack.setImageResource(newTopResource)
-
-        val topOutAnimation = AnimatorInflater.loadAnimator(context, R.animator.top_out) as AnimatorSet
         topFront.pivotY = topFront.height.toFloat()
         topOutAnimation.setTarget(topFront)
         topOutAnimation.start()
@@ -67,8 +65,6 @@ class CalendarView(context: Context): ConstraintLayout(context) {
         }
 
         bottomFront.setImageResource(newBottomResource)
-
-        val bottomInAnimation = AnimatorInflater.loadAnimator(context, R.animator.bottom_in) as AnimatorSet
         bottomFront.pivotY = 0.toFloat()
         bottomInAnimation.setTarget(bottomFront)
         bottomInAnimation.start()
